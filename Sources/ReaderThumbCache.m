@@ -177,7 +177,13 @@
 
 			[thumbFetch setQueuePriority:(priority ? NSOperationQueuePriorityNormal : NSOperationQueuePriorityLow)]; // Queue priority
 
-			request.thumbView.operation = thumbFetch; [thumbFetch setThreadPriority:(priority ? 0.55 : 0.35)]; // Thread priority
+            request.thumbView.operation = thumbFetch;
+            
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
+                thumbFetch.qualityOfService = NSQualityOfServiceUtility; // QoS
+            } else {
+                [thumbFetch setThreadPriority:(priority ? 0.55 : 0.35)]; // Thread priority
+            }
 
 			[[ReaderThumbQueue sharedInstance] addLoadOperation:thumbFetch]; // Queue the operation
 		}
