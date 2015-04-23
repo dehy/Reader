@@ -73,6 +73,8 @@
 	{
 		if ((object != nil) && ([object isKindOfClass:[ReaderDocument class]])) // Valid object
 		{
+            _statusBarHidden = YES;
+            
 			updateBookmarked = YES; bookmarked = [NSMutableArray new]; // Bookmarked pages
 
 			document = object; // Retain the ReaderDocument object for our use
@@ -189,7 +191,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-	return YES;
+	return _statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle

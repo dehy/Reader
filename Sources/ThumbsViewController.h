@@ -44,6 +44,7 @@
 @interface ThumbsViewController : UIViewController
 
 @property (nonatomic, weak, readwrite) id <ThumbsViewControllerDelegate> delegate;
+@property (nonatomic) BOOL statusBarHidden;
 
 - (instancetype)initWithReaderDocument:(ReaderDocument *)object;
 

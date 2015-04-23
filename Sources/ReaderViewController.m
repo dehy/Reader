@@ -293,6 +293,8 @@
 		if ((object != nil) && ([object isKindOfClass:[ReaderDocument class]])) // Valid object
 		{
 			userInterfaceIdiom = [UIDevice currentDevice].userInterfaceIdiom; // User interface idiom
+            
+            _statusBarHidden = YES;
 
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter]; // Default notification center
 
@@ -454,7 +456,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-	return YES;
+	return _statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -727,6 +729,7 @@
 
 	ThumbsViewController *thumbsViewController = [[ThumbsViewController alloc] initWithReaderDocument:document];
 
+    thumbsViewController.statusBarHidden = _statusBarHidden;
 	thumbsViewController.title = self.title; thumbsViewController.delegate = self; // ThumbsViewControllerDelegate
 
 	thumbsViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
