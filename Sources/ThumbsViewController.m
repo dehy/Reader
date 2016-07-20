@@ -38,6 +38,8 @@
 @implementation ThumbsViewController
 {
 	ReaderDocument *document;
+    
+    NSString *extraTitle;
 
 	ThumbsMainToolbar *mainToolbar;
 
@@ -88,6 +90,14 @@
 	return self;
 }
 
+- (instancetype)initWithReaderDocument:(ReaderDocument *)object andTitle:(NSString *)title
+{
+    self = [self initWithReaderDocument:object];
+    extraTitle = [title copy];
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -114,7 +124,12 @@
 		}
 	}
 
-	NSString *toolbarTitle = [document.fileName stringByDeletingPathExtension];
+    NSString *toolbarTitle;
+    if (extraTitle != nil) {
+        toolbarTitle = extraTitle;
+    } else {
+        toolbarTitle = [document.fileName stringByDeletingPathExtension];
+    }
 
 	CGRect toolbarRect = scrollViewRect; // Toolbar frame
 	toolbarRect.size.height = TOOLBAR_HEIGHT; // Default toolbar height

@@ -41,6 +41,8 @@
 @implementation ReaderViewController
 {
 	ReaderDocument *document;
+    
+    NSString *extraTitle;
 
 	UIScrollView *theScrollView;
 
@@ -286,6 +288,14 @@
 
 #pragma mark - UIViewController methods
 
+- (instancetype)initWithReaderDocument:(ReaderDocument *)object andTitle:(NSString *)title
+{
+    self = [self initWithReaderDocument:object];
+    extraTitle = [title copy];
+    
+    return self;
+}
+
 - (instancetype)initWithReaderDocument:(ReaderDocument *)object
 {
 	if ((self = [super initWithNibName:nil bundle:nil])) // Initialize superclass
@@ -357,7 +367,7 @@
 	[self.view addSubview:theScrollView];
 
 	CGRect toolbarRect = viewRect; toolbarRect.size.height = TOOLBAR_HEIGHT;
-	mainToolbar = [[ReaderMainToolbar alloc] initWithFrame:toolbarRect document:document]; // ReaderMainToolbar
+	mainToolbar = [[ReaderMainToolbar alloc] initWithFrame:toolbarRect document:document andTitle:extraTitle]; // ReaderMainToolbar
 	mainToolbar.delegate = self; // ReaderMainToolbarDelegate
 	[self.view addSubview:mainToolbar];
 
@@ -727,7 +737,7 @@
 
 	if (printInteraction != nil) [printInteraction dismissAnimated:NO];
 
-	ThumbsViewController *thumbsViewController = [[ThumbsViewController alloc] initWithReaderDocument:document];
+    ThumbsViewController *thumbsViewController = [[ThumbsViewController alloc] initWithReaderDocument:document andTitle:extraTitle];
 
     thumbsViewController.statusBarHidden = _statusBarHidden;
 	thumbsViewController.title = self.title; thumbsViewController.delegate = self; // ThumbsViewControllerDelegate

@@ -43,5 +43,6 @@
 @property (nonatomic) BOOL statusBarHidden;
 
 - (instancetype)initWithReaderDocument:(ReaderDocument *)object;
+- (instancetype)initWithReaderDocument:(ReaderDocument *)object andTitle:(NSString *)title;
 
 @end

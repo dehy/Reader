@@ -35,6 +35,8 @@
 
 	UIImage *markImageN;
 	UIImage *markImageY;
+    
+    NSString *extraTitle;
 }
 
 #pragma mark - Constants
@@ -234,7 +236,11 @@
 			titleLabel.backgroundColor = [UIColor clearColor];
 			titleLabel.adjustsFontSizeToFitWidth = YES;
 			titleLabel.minimumScaleFactor = 0.75f;
-			titleLabel.text = [document.fileName stringByDeletingPathExtension];
+            if (extraTitle != nil) {
+                titleLabel.text = extraTitle;
+            } else {
+                titleLabel.text = [document.fileName stringByDeletingPathExtension];
+            }
 #if (READER_FLAT_UI == FALSE) // Option
 			titleLabel.shadowColor = [UIColor colorWithWhite:0.75f alpha:1.0f];
 			titleLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -245,6 +251,14 @@
 	}
 
 	return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame document:(ReaderDocument *)document andTitle:(NSString *)title
+{
+    extraTitle = [title copy];
+    self = [self initWithFrame:frame document:document];
+    
+    return self;
 }
 
 - (void)setBookmarkState:(BOOL)state
